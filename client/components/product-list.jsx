@@ -27,7 +27,8 @@ class ProductList extends React.Component {
           name={product.name}
           price={(product.price / 100).toFixed(2)}
           image={product.image}
-          desc={product.shortDescription} />
+          desc={product.shortDescription}
+          onClick={() => this.props.setView('details', { productId: product.productId })} />
       );
     });
 
