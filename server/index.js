@@ -40,6 +40,13 @@ app.get('/api/products/:productId', (req, res, next) => {
     from "products"
    where "productId" = $1;
   `;
+  if (parseInt(req.params.productId) < 0 ||
+      isNaN(parseInt(req.params.productId))) {
+    return next(new ClientError(
+      'The productId is invalid',
+      400
+    ));
+  }
   db.query(sql, values)
     .then(result => {
       if (!(result.rows[0])) {
