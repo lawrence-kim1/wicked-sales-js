@@ -12,6 +12,7 @@ export default class App extends React.Component {
         params: {}
       }
     };
+    this.setView = this.setView.bind(this);
   }
 
   setView(name, params) {
@@ -29,7 +30,7 @@ export default class App extends React.Component {
       );
     } else if (view.name === 'details') {
       return (
-        <ProductDetails productId={view.params} />
+        <ProductDetails product={view.params} />
       );
     }
   }

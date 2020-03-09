@@ -3,7 +3,8 @@ import React from 'react';
 class ProductListItem extends React.Component {
   render() {
     return (
-      <div className="col-sm-4">
+      <div className="col-sm-4"
+        onClick={() => this.props.setView('details', { productId: this.props.productId })}>
         <div className="card h-75">
           <img src={this.props.image} className="card-img-top h-50" alt={this.props.name}/>
           <div className="card-body">
