@@ -9,6 +9,10 @@ class ProductList extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.getProducts();
+  }
+
   getProducts() {
     fetch('/api/products')
       .then(res => res.json())
