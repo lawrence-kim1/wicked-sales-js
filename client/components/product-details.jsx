@@ -12,7 +12,7 @@ class ProductDetails extends React.Component {
     const productId = this.props.product.productId;
     fetch(`/api/products/${productId}`)
       .then(res => res.json())
-      .catch(product => this.setState({ product }));
+      .then(product => this.setState({ product }));
   }
 
   render() {
@@ -21,17 +21,15 @@ class ProductDetails extends React.Component {
       return (
         <div className="container">
           <a href="#"> Back to catalog </a>
-          <header>
-            <div className="col-4">
-              <img src={product.image} />
-            </div>
+          <header className="row">
+            <img className="col-4" src={product.image} />
             <div className="col-8">
               <h1>{product.name}</h1>
-              <h2>{product.price}</h2>
+              <h2>${(product.price / 100).toFixed(2)}</h2>
               <h2>{product.shortDescription}</h2>
             </div>
           </header>
-          <div className="col-12">
+          <div>
             {product.longDescription}
           </div>
         </div>
