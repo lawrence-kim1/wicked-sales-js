@@ -9,6 +9,12 @@ class ProductList extends React.Component {
     };
   }
 
+  getProducts() {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(products => this.setState({ products }));
+  }
+
   render() {
     const listItems = this.state.products.map(product => {
       return (
