@@ -26,10 +26,37 @@ app.get('/api/products', (req, res, next) => {
          "price",
          "image",
          "shortDescription"
-    from "products"
+    from "products";
   `;
   db.query(sql)
     .then(result => res.json(result.rows))
+    .catch(err => next(err));
+});
+
+app.get('/api/products/:productId', (req, res, next) => {
+  const values = [`${req.params.productId}`];
+  const sql = `
+  select *
+    from "products"
+   where "productId" = $1;
+  `;
+  if (parseInt(req.params.productId) < 0 ||
+      isNaN(parseInt(req.params.productId))) {
+    return next(new ClientError(
+      'The productId is invalid',
+      400
+    ));
+  }
+  db.query(sql, values)
+    .then(result => {
+      if (!(result.rows[0])) {
+        return next(new ClientError(
+          'The product was not found.',
+          404
+        ));
+      }
+      res.json(result.rows[0]);
+    })
     .catch(err => next(err));
 });
 
