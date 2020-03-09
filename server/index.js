@@ -34,7 +34,7 @@ app.get('/api/products', (req, res, next) => {
 });
 
 app.get('/api/products/:productId', (req, res, next) => {
-  const values = [`'${req.params.productId}'`];
+  const values = [`${req.params.productId}`];
   const sql = `
   select *
     from "products"
@@ -43,9 +43,10 @@ app.get('/api/products/:productId', (req, res, next) => {
   db.query(sql, values)
     .then(result => {
       if (!(result.rows[0])) {
-        res.status(404).next(new ClientError({
-          error: 'The product was not found.'
-        }));
+        return next(new ClientError(
+          'The product was not found.',
+          404
+        ));
       }
       res.json(result.rows[0]);
     })
