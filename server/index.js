@@ -26,7 +26,7 @@ app.get('/api/products', (req, res, next) => {
          "price",
          "image",
          "shortDescription"
-    from "products"
+    from "products";
   `;
   db.query(sql)
     .then(result => res.json(result.rows))
@@ -34,7 +34,22 @@ app.get('/api/products', (req, res, next) => {
 });
 
 app.get('/api/products/:productId', (req, res, next) => {
-
+  const values = [`'${req.params.productId}'`];
+  const sql = `
+  select *
+    from "products"
+   where "productId" = $1;
+  `;
+  db.query(sql, values)
+    .then(result => {
+      if (!(result.rows[0])) {
+        res.status(404).next(new ClientError({
+          error: 'The product was not found.'
+        }));
+      }
+      res.json(result.rows[0]);
+    })
+    .catch(err => next(err));
 });
 
 app.use('/api', (req, res, next) => {
