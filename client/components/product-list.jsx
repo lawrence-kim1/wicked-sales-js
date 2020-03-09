@@ -25,7 +25,7 @@ class ProductList extends React.Component {
         <ProductListItem
           key={product.productId}
           name={product.name}
-          price={product.price}
+          price={(product.price / 100).toFixed(2)}
           image={product.image}
           desc={product.shortDescription} />
       );
