@@ -19,7 +19,7 @@ class ProductDetails extends React.Component {
     const product = this.state.product;
     if (product) {
       return (
-        <div className="container">
+        <div className="container card">
           <a href="#"
             onClick={() => this.props.setView('catalog', {})}>
             Back to catalog
@@ -28,8 +28,8 @@ class ProductDetails extends React.Component {
             <img className="col-4" src={product.image} />
             <div className="col-8">
               <h1>{product.name}</h1>
-              <h2>${(product.price / 100).toFixed(2)}</h2>
-              <h2>{product.shortDescription}</h2>
+              <p className="text-muted">${(product.price / 100).toFixed(2)}</p>
+              <p>{product.shortDescription}</p>
             </div>
           </header>
           <div>
