@@ -24,13 +24,16 @@ export default class App extends React.Component {
     if (view.name === 'catalog') {
       return (
         <div className="container">
-          <Header />
+          <Header setView={this.setView}/>
           <ProductList setView={this.setView} />
         </div>
       );
     } else if (view.name === 'details') {
       return (
-        <ProductDetails product={view.params} setView={this.setView} />
+        <div className="container">
+          <Header setView={this.setView}/>
+          <ProductDetails product={view.params} setView={this.setView} />
+        </div>
       );
     }
   }

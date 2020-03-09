@@ -4,7 +4,7 @@ class Header extends React.Component {
   render() {
     return (
       <div>
-        <h1>Wicked Sales</h1>
+        <h1 onClick={() => this.props.setView('catalog', {})}>Wicked Sales</h1>
         <img />
       </div>
     );

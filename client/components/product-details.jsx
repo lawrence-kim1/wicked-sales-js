@@ -20,10 +20,9 @@ class ProductDetails extends React.Component {
     if (product) {
       return (
         <div className="container card">
-          <a href="#"
-            onClick={() => this.props.setView('catalog', {})}>
-            Back to catalog
-          </a>
+          <div onClick={() => this.props.setView('catalog', {})} style={{ cursor: 'pointer' }}>
+            <p className="text-muted my-3">&lt; Back to catalog</p>
+          </div>
           <header className="row">
             <img className="col-4" src={product.image} />
             <div className="col-8">
@@ -32,7 +31,7 @@ class ProductDetails extends React.Component {
               <p>{product.shortDescription}</p>
             </div>
           </header>
-          <div>
+          <div className="card-text mb-3">
             {product.longDescription}
           </div>
         </div>

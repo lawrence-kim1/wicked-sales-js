@@ -35,7 +35,7 @@ class ProductList extends React.Component {
 
     return (
       <div className="container">
-        <div className="row" >
+        <div className="card-deck">
           {listItems}
         </div>
       </div>
