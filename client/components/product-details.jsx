@@ -16,6 +16,27 @@ class ProductDetails extends React.Component {
   }
 
   render() {
+    const product = this.state.product;
+    if (product) {
+      return (
+        <div className="container">
+          <a href="#"> Back to catalog </a>
+          <header>
+            <div className="col-4">
+              <img src={product.image} />
+            </div>
+            <div className="col-8">
+              <h1>{product.name}</h1>
+              <h2>{product.price}</h2>
+              <h2>{product.shortDescription}</h2>
+            </div>
+          </header>
+          <div className="col-12">
+            {product.longDescription}
+          </div>
+        </div>
+      );
+    }
     return null;
   }
 }
