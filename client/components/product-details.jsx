@@ -20,7 +20,10 @@ class ProductDetails extends React.Component {
     if (product) {
       return (
         <div className="container">
-          <a href="#"> Back to catalog </a>
+          <a href="#"
+            onClick={() => this.props.setView('catalog', {})}>
+            Back to catalog
+          </a>
           <header className="row">
             <img className="col-4" src={product.image} />
             <div className="col-8">

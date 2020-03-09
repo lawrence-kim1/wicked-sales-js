@@ -30,7 +30,7 @@ export default class App extends React.Component {
       );
     } else if (view.name === 'details') {
       return (
-        <ProductDetails product={view.params} />
+        <ProductDetails product={view.params} setView={this.setView} />
       );
     }
   }
