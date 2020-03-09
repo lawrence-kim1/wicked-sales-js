@@ -22,7 +22,12 @@ class ProductList extends React.Component {
   render() {
     const listItems = this.state.products.map(product => {
       return (
-        <ProductListItem key={product}/>
+        <ProductListItem
+          key={product.productId}
+          name={product.name}
+          price={product.price}
+          image={product.image}
+          desc={product.shortDescription} />
       );
     });
 
