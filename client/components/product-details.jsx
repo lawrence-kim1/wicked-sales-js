@@ -20,18 +20,22 @@ class ProductDetails extends React.Component {
     if (product) {
       return (
         <div className="container card">
-          <div onClick={() => this.props.setView('catalog', {})} style={{ cursor: 'pointer' }}>
-            <p className="text-muted my-3">&lt; Back to catalog</p>
+          <div>
+            <p onClick={() => this.props.setView('catalog', {})}
+              style={{ cursor: 'pointer' }}
+              className="text-muted my-3 w-25">
+                &lt; Back to catalog
+            </p>
           </div>
-          <header className="row">
+          <header className="row mb-5">
             <img className="col-4" src={product.image} />
             <div className="col-8">
               <h1>{product.name}</h1>
-              <p className="text-muted">${(product.price / 100).toFixed(2)}</p>
+              <h5 className="text-muted">${(product.price / 100).toFixed(2)}</h5>
               <p>{product.shortDescription}</p>
             </div>
           </header>
-          <div className="card-text mb-3">
+          <div className="card-text mb-5">
             {product.longDescription}
           </div>
         </div>

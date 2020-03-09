@@ -5,3 +5,8 @@ img {
 p {
   margin: 0;
 }
+
+.page-header {
+  color: white;
+  background-color: rgb(27, 31, 36);
+}
