@@ -4,7 +4,7 @@ import CartSummaryItem from './cart-summary-item';
 class CartSummary extends React.Component {
   render() {
     const cartList = this.props.cart.map(product => {
-      return <CartSummaryItem key={product.productId} product={product} />;
+      return <CartSummaryItem key={product.cartItemId} product={product} />;
     });
 
     return (
