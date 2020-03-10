@@ -78,10 +78,21 @@ app.post('/api/post/:productId', (req, res, next) => {
       400
     ));
   }
-  // const sql = `
-  // insert into "carts" ($1)
-  //      values ($2)
-  // `;
+  const sql = `
+  insert into "carts" ($1)
+       values ($2)
+  `;
+  db.query(sql)
+    .then(result => {
+      if (!(result.rows[0])) {
+        return next(new ClientError(
+          'The product was not found.',
+          404
+        ));
+      }
+      res.json(result.rows[0]);
+    })
+    .then();
 });
 
 app.use('/api', (req, res, next) => {
