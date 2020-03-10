@@ -70,7 +70,7 @@ app.get('/api/cart', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/post/:productId', (req, res, next) => {
+app.post('/api/cart/:productId', (req, res, next) => {
   if (parseInt(req.params.productId) < 0 ||
       isNaN(parseInt(req.params.productId))) {
     return next(new ClientError(
@@ -78,19 +78,23 @@ app.post('/api/post/:productId', (req, res, next) => {
       400
     ));
   }
+  const values = [`${req.params.productId}`];
   const sql = `
-  insert into "carts" ($1)
-       values ($2)
+      select "price"
+        from "products"
+       where "productId" = $1;
   `;
-  db.query(sql)
+  db.query(sql, values)
     .then(result => {
       if (!(result.rows[0])) {
-        return next(new ClientError(
-          'The product was not found.',
-          404
-        ));
+        throw new ClientError('The product was not found.', 404);
       }
-      res.json(result.rows[0]);
+      return db.query(`
+        insert into "carts" ("cartId", "createdAt")
+             values (default, default)
+          returning "cartId";
+      `)
+        .then(cartRes => res.json({ price: result.rows[0].price, cartId: cartRes.rows[0].cartId }));
     })
     .then();
 });
