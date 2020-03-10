@@ -3,12 +3,14 @@ import CartSummaryItem from './cart-summary-item';
 
 class CartSummary extends React.Component {
   render() {
-    const cartList = this.state.cart.map(product => {
-      return <CartSummaryItem key={product.productId} />;
+    const cartList = this.props.cart.map(product => {
+      return <CartSummaryItem key={product.productId} product={product} />;
     });
 
     return (
-      { cartList }
+      <div className="container">
+        {cartList}
+      </div>
     );
   }
 }
