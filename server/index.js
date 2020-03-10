@@ -150,6 +150,12 @@ app.post('/api/orders', (req, res, next) => {
       !req.body.shippingAddress) {
     return new ClientError('There is a problem with the order details.', 400);
   }
+  const values = [req.body.cartId, req.body.name, req.body.creditCard, req.body.shippingAddress];
+  const sql = `
+  insert into "orders" ("cartId", "name", "creditCard", "shippingAddress")
+       values ($1, $2, $3, $4);
+  `;
+  db.query(sql, values);
 });
 
 app.use('/api', (req, res, next) => {
