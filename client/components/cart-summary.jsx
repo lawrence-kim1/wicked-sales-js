@@ -9,6 +9,14 @@ class CartSummary extends React.Component {
 
     return (
       <div className="container">
+        <p className="text-muted w-25 my-3"
+          style={{ cursor: 'pointer' }}
+          onClick={() => this.props.setView('catalog', {})}>
+          &lt; Back to catalog
+        </p>
+        <h1 className="mb-3">
+          My Cart
+        </h1>
         {cartList}
       </div>
     );
