@@ -33,7 +33,7 @@ class ProductDetails extends React.Component {
               <h1>{product.name}</h1>
               <h5 className="text-muted">${(product.price / 100).toFixed(2)}</h5>
               <p className="mb-3">{product.shortDescription}</p>
-              <button onClick={product => this.props.addToCart(product)}
+              <button onClick={() => this.props.addToCart(product)}
                 className="btn btn-primary">Add To Cart</button>
             </div>
           </header>
