@@ -94,7 +94,9 @@ app.post('/api/cart/:productId', (req, res, next) => {
              values (default, default)
           returning "cartId";
       `)
-        .then(cartRes => { return { price: result.rows[0].price, cartId: cartRes.rows[0].cartId }; });
+        .then(cartRes => {
+          return { price: result.rows[0].price, cartId: cartRes.rows[0].cartId };
+        });
     })
     .then(cartObj => {
       req.session.cartId = cartObj.cartId;
@@ -103,9 +105,24 @@ app.post('/api/cart/:productId', (req, res, next) => {
              values ($1, $2, $3)
           returning "cartItemId";
       `, [cartObj.cartId, `${req.params.productId}`, cartObj.price])
-        .then(cartItemRes => { return { cartItemId: cartItemRes.rows[0].cartItemId }; });
+        .then(cartItemRes => {
+          return { cartItemId: cartItemRes.rows[0].cartItemId };
+        });
     })
-    .then();
+    .then(cartItem => {
+      db.query(`
+        select "c"."cartItemId",
+               "c"."price",
+               "p"."productId",
+               "p"."image",
+               "p"."name",
+               "p"."shortDescription"
+          from "cartItems" as "c"
+          join "products" as "p" using ("productId")
+         where "c"."cartItemId" = $1;
+      `, [cartItem.cartItemId])
+        .then(result => res.status(201).json(result.rows[0]));
+    });
 });
 
 app.use('/api', (req, res, next) => {
