@@ -31,6 +31,15 @@ export default class App extends React.Component {
       .then(cart => this.setState({ cart }));
   }
 
+  addToCart(product) {
+    fetch('/api/cart', {
+      method: 'POST',
+      body: product.productId
+    })
+      .then(res => res.json())
+      .then(cart => this.setState({ cart }));
+  }
+
   render() {
     const view = this.state.view;
     if (view.name === 'catalog') {
