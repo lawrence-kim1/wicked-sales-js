@@ -89,6 +89,9 @@ app.post('/api/cart/:productId', (req, res, next) => {
       if (!(result.rows[0])) {
         throw new ClientError('The product was not found.', 404);
       }
+      if (req.session.cartId) {
+        return { price: result.rows[0].price, cartId: req.session.cartId };
+      }
       return db.query(`
         insert into "carts" ("cartId", "createdAt")
              values (default, default)
