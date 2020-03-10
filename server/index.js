@@ -94,7 +94,16 @@ app.post('/api/cart/:productId', (req, res, next) => {
              values (default, default)
           returning "cartId";
       `)
-        .then(cartRes => res.json({ price: result.rows[0].price, cartId: cartRes.rows[0].cartId }));
+        .then(cartRes => { return { price: result.rows[0].price, cartId: cartRes.rows[0].cartId }; });
+    })
+    .then(cartObj => {
+      req.session.cartId = cartObj.cartId;
+      return db.query(`
+        insert into "cartItems" ("cartId", "productId", "price")
+             values ($1, $2, $3)
+          returning "cartItemId";
+      `, [cartObj.cartId, `${req.params.productId}`, cartObj.price])
+        .then(cartItemRes => { return { cartItemId: cartItemRes.rows[0].cartItemId }; });
     })
     .then();
 });
