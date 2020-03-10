@@ -9,7 +9,9 @@ class Header extends React.Component {
             style={{ cursor: 'pointer' }}>
             Wicked Sales
           </h1>
-          <div className="d-flex flex-wrap align-items-center">
+          <div className="d-flex flex-wrap align-items-center"
+            onClick={() => this.props.setView('cart', {})}
+            style={{ cursor: 'pointer' }}>
             <h5 className="mr-2">{this.props.cartItemCount} {this.props.cartItemCount === 1 ? 'item' : 'items'}</h5>
             <i className="fas fa-shopping-cart fa-2x mr-5"></i>
           </div>
