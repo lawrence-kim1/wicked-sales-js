@@ -70,6 +70,20 @@ app.get('/api/cart', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/post/:productId', (req, res, next) => {
+  if (parseInt(req.params.productId) < 0 ||
+      isNaN(parseInt(req.params.productId))) {
+    return next(new ClientError(
+      'The productId is invalid',
+      400
+    ));
+  }
+  // const sql = `
+  // insert into "carts" ($1)
+  //      values ($2)
+  // `;
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
