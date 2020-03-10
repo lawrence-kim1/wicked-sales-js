@@ -80,15 +80,16 @@ app.get('/api/cart', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/cart/:productId', (req, res, next) => {
-  if (parseInt(req.params.productId) < 0 ||
-      isNaN(parseInt(req.params.productId))) {
+app.post('/api/cart', (req, res, next) => {
+  const postedProductId = req.body.productId;
+  if (parseInt(postedProductId) < 0 ||
+      isNaN(parseInt(postedProductId))) {
     return next(new ClientError(
       'The productId is invalid',
       400
     ));
   }
-  const values = [`${req.params.productId}`];
+  const values = [`${postedProductId}`];
   const sql = `
       select "price"
         from "products"
@@ -117,7 +118,7 @@ app.post('/api/cart/:productId', (req, res, next) => {
         insert into "cartItems" ("cartId", "productId", "price")
              values ($1, $2, $3)
           returning "cartItemId";
-      `, [cartObj.cartId, `${req.params.productId}`, cartObj.price])
+      `, [cartObj.cartId, `${postedProductId}`, cartObj.price])
         .then(cartItemRes => {
           return { cartItemId: cartItemRes.rows[0].cartItemId };
         });
