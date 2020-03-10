@@ -3,9 +3,12 @@ import React from 'react';
 class Header extends React.Component {
   render() {
     return (
-      <div>
-        <h1>Wicked Sales</h1>
-        <img />
+      <div className="page-header">
+        <h1 style={{ cursor: 'pointer' }}
+          onClick={() => this.props.setView('catalog', {})}
+          className="ml-5 mb-5">
+          Wicked Sales
+        </h1>
       </div>
     );
   }
