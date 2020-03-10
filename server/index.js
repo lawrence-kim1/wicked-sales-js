@@ -144,6 +144,12 @@ app.post('/api/orders', (req, res, next) => {
   if (!req.session.cartId) {
     return new ClientError('There is no valid order currently.', 400);
   }
+  if (!req.body.cartId ||
+      !req.body.name ||
+      !req.body.creditCard ||
+      !req.body.shippingAddress) {
+    return new ClientError('There is a problem with the order details.', 400);
+  }
 });
 
 app.use('/api', (req, res, next) => {
