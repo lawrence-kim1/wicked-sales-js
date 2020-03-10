@@ -135,7 +135,8 @@ app.post('/api/cart/:productId', (req, res, next) => {
          where "c"."cartItemId" = $1;
       `, [cartItem.cartItemId])
         .then(result => res.status(201).json(result.rows[0]));
-    });
+    })
+    .catch(err => next(err));
 });
 
 app.use('/api', (req, res, next) => {
