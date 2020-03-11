@@ -91,11 +91,14 @@ export default class App extends React.Component {
           <Header
             setView={this.setView}
             cartItemCount={this.state.cart.length} />
-          <CheckoutForm cart={this.state.cart} setView={this.setView} />
+          <CheckoutForm
+            cart={this.state.cart}
+            setView={this.setView}
+            placeOrder={this.placeOrder} />
         </div>
       );
       default:
-        break;
+        return null;
     }
   }
 }

@@ -5,8 +5,24 @@ class CheckoutForm extends React.Component {
     super(props);
     this.state = {
       name: '',
-      creditCard: ''
+      creditCard: '',
+      shippingAddress: ''
     };
+    this.setName = this.setName.bind(this);
+    this.setCreditCard = this.setCreditCard.bind(this);
+    this.setShippingAddress = this.setShippingAddress.bind(this);
+  }
+
+  setName(event) {
+    this.setState({ name: event.target.value });
+  }
+
+  setCreditCard(event) {
+    this.setState({ creditCard: event.target.value });
+  }
+
+  setShippingAddress(event) {
+    this.setState({ shippingAddress: event.target.value });
   }
 
   render() {
@@ -16,7 +32,8 @@ class CheckoutForm extends React.Component {
     });
 
     return (
-      <form className="container">
+      <form className="container"
+        onSubmit={() => this.props.placeOrder(this.state)}>
         <h1 className="mb-3">My Cart</h1>
         <h5 className="text-muted mb-3">
           Order Total: ${(itemTotal / 100).toFixed(2)}
@@ -41,11 +58,13 @@ class CheckoutForm extends React.Component {
         </div>
         <div className="d-flex justify-content-between">
           <p className="text-muted"
-            onClick={() => this.setState('catalog', {})}
+            onClick={() => this.props.setView('catalog', {})}
             style={{ cursor: 'pointer' }}>
             &lt; Continue Shopping
           </p>
-          <button className="btn btn-primary">Place Order</button>
+          <button className="btn btn-primary">
+            Place Order
+          </button>
         </div>
       </form>
     );
