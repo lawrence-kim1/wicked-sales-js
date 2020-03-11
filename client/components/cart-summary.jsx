@@ -22,9 +22,15 @@ class CartSummary extends React.Component {
           My Cart
         </h1>
         {cartList}
-        <h2 className="mb-5">
-          Item Total: ${(itemTotal / 100).toFixed(2)}
-        </h2>
+        <div className="d-flex justify-content-between">
+          <h2 className="mb-5">
+            Item Total: ${(itemTotal / 100).toFixed(2)}
+          </h2>
+          <button className="btn btn-primary"
+            onClick={() => this.props.setView('checkout', {})}>
+            Checkout
+          </button>
+        </div>
       </div>
     );
   }
