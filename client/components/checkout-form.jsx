@@ -19,7 +19,9 @@ class CheckoutForm extends React.Component {
   }
 
   setCreditCard(event) {
-    this.setState({ creditCard: event.target.value });
+    const newArr = event.target.value.match(/\d{1,4}/g);
+    const creditCard = newArr.join(' ');
+    this.setState({ creditCard });
   }
 
   setShippingAddress(event) {
@@ -55,6 +57,7 @@ class CheckoutForm extends React.Component {
             id="name"
             placeholder="Name"
             className="form-control"
+            value={this.state.name}
             onChange={this.setName} />
         </div>
         <div className="d-flex flex-column mb-3 form-group">
@@ -63,6 +66,7 @@ class CheckoutForm extends React.Component {
             id="credit"
             placeholder="Credit Card Number"
             className="form-control"
+            value={this.state.creditCard}
             onChange={this.setCreditCard}
             minLength="18"
             maxLength="19" />
@@ -72,6 +76,7 @@ class CheckoutForm extends React.Component {
           <textarea id="shipping"
             className="form-control"
             rows="5"
+            value={this.state.shippingAddress}
             onChange={this.setShippingAddress} />
         </div>
         <div className="d-flex justify-content-between">
