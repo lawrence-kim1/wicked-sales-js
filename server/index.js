@@ -144,8 +144,7 @@ app.post('/api/orders', (req, res, next) => {
   if (!req.session.cartId) {
     throw new ClientError('There is no valid order currently.', 400);
   }
-  if (!req.session.cartId ||
-      !req.body.name ||
+  if (!req.body.name ||
       !req.body.creditCard ||
       !req.body.shippingAddress) {
     throw new ClientError('There is a problem with the order details.', 400);
