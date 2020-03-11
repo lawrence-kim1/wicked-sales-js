@@ -144,13 +144,13 @@ app.post('/api/orders', (req, res, next) => {
   if (!req.session.cartId) {
     return new ClientError('There is no valid order currently.', 400);
   }
-  if (!req.body.cartId ||
+  if (!req.session.cartId ||
       !req.body.name ||
       !req.body.creditCard ||
       !req.body.shippingAddress) {
     return new ClientError('There is a problem with the order details.', 400);
   }
-  const values = [req.body.cartId, req.body.name, req.body.creditCard, req.body.shippingAddress];
+  const values = [req.session.cartId, req.body.name, req.body.creditCard, req.body.shippingAddress];
   const sql = `
   insert into "orders" ("cartId", "name", "creditCard", "shippingAddress")
        values ($1, $2, $3, $4)
@@ -165,7 +165,8 @@ app.post('/api/orders', (req, res, next) => {
         name: result.name,
         shippingAddress: result.shippingAddress
       });
-    });
+    })
+    .catch(err => next(err));
 });
 
 app.use('/api', (req, res, next) => {
