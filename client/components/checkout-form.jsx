@@ -19,7 +19,7 @@ class CheckoutForm extends React.Component {
         <label htmlFor="shipping">Shiping Address</label>
         <textarea id="shipping"></textarea>
         <div className="d-flex justify-content-between">
-          <p>&lt; Continue Shopping</p>
+          <p className="text-muted">&lt; Continue Shopping</p>
           <button className="btn btn-primary">Place Order</button>
         </div>
       </form>
