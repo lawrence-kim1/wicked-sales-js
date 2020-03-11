@@ -140,6 +140,30 @@ app.post('/api/cart', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/orders', (req, res, next) => {
+  if (!req.session.cartId) {
+    throw new ClientError('There is no valid order currently.', 400);
+  }
+  if (!req.body.name ||
+      !req.body.creditCard ||
+      !req.body.shippingAddress) {
+    throw new ClientError('There is a problem with the order details.', 400);
+  }
+  const values = [req.session.cartId, req.body.name, req.body.creditCard, req.body.shippingAddress];
+  const sql = `
+  insert into "orders" ("cartId", "name", "creditCard", "shippingAddress")
+       values ($1, $2, $3, $4)
+    returning *;
+  `;
+  db.query(sql, values)
+    .then(result => {
+      const orderObj = result.rows[0];
+      delete req.session.cartId;
+      res.status(201).json(orderObj);
+    })
+    .catch(err => next(err));
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });

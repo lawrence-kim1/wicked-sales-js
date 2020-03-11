@@ -6,6 +6,10 @@ class CartSummary extends React.Component {
     const cartList = this.props.cart.map(product => {
       return <CartSummaryItem key={product.cartItemId} product={product} />;
     });
+    let itemTotal = 0;
+    this.props.cart.forEach(product => {
+      itemTotal += product.price;
+    });
 
     return (
       <div className="container">
@@ -18,6 +22,9 @@ class CartSummary extends React.Component {
           My Cart
         </h1>
         {cartList}
+        <h2 className="mb-5">
+          Item Total: ${(itemTotal / 100).toFixed(2)}
+        </h2>
       </div>
     );
   }
