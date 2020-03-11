@@ -23,7 +23,7 @@ class CartSummary extends React.Component {
         </h1>
         {cartList}
         <div className="d-flex justify-content-between">
-          <h2 className="mb-5">
+          <h2>
             Item Total: ${(itemTotal / 100).toFixed(2)}
           </h2>
           <button className="btn btn-primary"
