@@ -11,6 +11,7 @@ class CheckoutForm extends React.Component {
     this.setName = this.setName.bind(this);
     this.setCreditCard = this.setCreditCard.bind(this);
     this.setShippingAddress = this.setShippingAddress.bind(this);
+    this.submitForm = this.submitForm.bind(this);
   }
 
   setName(event) {
@@ -26,6 +27,11 @@ class CheckoutForm extends React.Component {
     this.setState({ shippingAddress: event.target.value });
   }
 
+  submitForm(event) {
+    event.preventDefault();
+    this.props.placeOrder(this.state);
+  }
+
   render() {
     let itemTotal = 0;
     this.props.cart.forEach(product => {
@@ -34,7 +40,7 @@ class CheckoutForm extends React.Component {
 
     return (
       <form className="container"
-        onSubmit={() => this.props.placeOrder(this.state)}>
+        onSubmit={this.submitForm}>
         <h1 className="mb-3">My Cart</h1>
         <h5 className="text-muted mb-3">
           Order Total: ${(itemTotal / 100).toFixed(2)}
@@ -68,7 +74,7 @@ class CheckoutForm extends React.Component {
             style={{ cursor: 'pointer' }}>
             &lt; Continue Shopping
           </p>
-          <button className="btn btn-primary">
+          <button className="btn btn-primary" type="submit">
             Place Order
           </button>
         </div>
