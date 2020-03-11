@@ -3,6 +3,7 @@ import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
+import CheckoutForm from './checkout-form';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,6 +18,7 @@ export default class App extends React.Component {
     this.setView = this.setView.bind(this);
     this.getCartItems = this.getCartItems.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.placeOrder = this.placeOrder.bind(this);
   }
 
   componentDidMount() {
@@ -45,10 +47,20 @@ export default class App extends React.Component {
       .then(cartItem => this.setState({ cart: this.state.cart.concat(cartItem) }));
   }
 
+  placeOrder(order) {
+    fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order)
+    })
+      .then(() => this.setState({ cart: [] }))
+      .then(() => this.setView('catalog', {}));
+  }
+
   render() {
     const view = this.state.view;
-    if (view.name === 'catalog') {
-      return (
+    switch (view.name) {
+      case 'catalog': return (
         <div>
           <Header
             setView={this.setView}
@@ -56,8 +68,7 @@ export default class App extends React.Component {
           <ProductList setView={this.setView} />
         </div>
       );
-    } else if (view.name === 'details') {
-      return (
+      case 'details': return (
         <div>
           <Header
             setView={this.setView}
@@ -68,8 +79,7 @@ export default class App extends React.Component {
             addToCart={this.addToCart} />
         </div>
       );
-    } else if (view.name === 'cart') {
-      return (
+      case 'cart': return (
         <div>
           <Header
             setView={this.setView}
@@ -77,6 +87,19 @@ export default class App extends React.Component {
           <CartSummary cart={this.state.cart} setView={this.setView} />
         </div>
       );
+      case 'checkout': return (
+        <div>
+          <Header
+            setView={this.setView}
+            cartItemCount={this.state.cart.length} />
+          <CheckoutForm
+            cart={this.state.cart}
+            setView={this.setView}
+            placeOrder={this.placeOrder} />
+        </div>
+      );
+      default:
+        return null;
     }
   }
 }
