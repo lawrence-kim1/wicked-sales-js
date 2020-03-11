@@ -19,7 +19,6 @@ class CheckoutForm extends React.Component {
   }
 
   setCreditCard(event) {
-    if (typeof event.target.value !== 'number') return;
     this.setState({ creditCard: event.target.value });
   }
 
@@ -29,6 +28,11 @@ class CheckoutForm extends React.Component {
 
   submitForm(event) {
     event.preventDefault();
+    const regex = /^\d{4}\s\d{4}\s\d{4}\s\d{3,4}$/;
+    if (!regex.test(this.state.creditCard)) return;
+    if (!this.state.name) return;
+    if (!this.state.creditCard) return;
+    if (!this.state.shippingAddress) return;
     this.props.placeOrder(this.state);
   }
 
@@ -55,11 +59,13 @@ class CheckoutForm extends React.Component {
         </div>
         <div className="d-flex flex-column mb-3 form-group">
           <label htmlFor="credit">Credit Card</label>
-          <input type="number"
+          <input type="text"
             id="credit"
             placeholder="Credit Card Number"
             className="form-control"
-            onChange={this.setCreditCard} />
+            onChange={this.setCreditCard}
+            minLength="18"
+            maxLength="19" />
         </div>
         <div className="d-flex flex-column mb-3 form-group">
           <label htmlFor="shipping">Shipping Address</label>
