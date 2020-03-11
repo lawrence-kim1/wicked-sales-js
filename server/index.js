@@ -142,13 +142,13 @@ app.post('/api/cart', (req, res, next) => {
 
 app.post('/api/orders', (req, res, next) => {
   if (!req.session.cartId) {
-    return new ClientError('There is no valid order currently.', 400);
+    throw new ClientError('There is no valid order currently.', 400);
   }
   if (!req.session.cartId ||
       !req.body.name ||
       !req.body.creditCard ||
       !req.body.shippingAddress) {
-    return new ClientError('There is a problem with the order details.', 400);
+    throw new ClientError('There is a problem with the order details.', 400);
   }
   const values = [req.session.cartId, req.body.name, req.body.creditCard, req.body.shippingAddress];
   const sql = `
@@ -160,12 +160,7 @@ app.post('/api/orders', (req, res, next) => {
     .then(result => {
       const orderObj = result.rows[0];
       delete req.session.cartId;
-      res.status(201).json({
-        orderId: orderObj.orderId,
-        createdAt: orderObj.createdAt,
-        name: orderObj.name,
-        shippingAddress: orderObj.shippingAddress
-      });
+      res.status(201).json(orderObj);
     })
     .catch(err => next(err));
 });
