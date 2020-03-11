@@ -7,7 +7,7 @@ class CartSummary extends React.Component {
       return <CartSummaryItem key={product.cartItemId} product={product} />;
     });
     let itemTotal = 0;
-    this.props.cart.map(product => {
+    this.props.cart.forEach(product => {
       itemTotal += product.price;
     });
 
