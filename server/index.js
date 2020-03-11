@@ -158,12 +158,13 @@ app.post('/api/orders', (req, res, next) => {
   `;
   db.query(sql, values)
     .then(result => {
+      const orderObj = result.rows[0];
       delete req.session.cartId;
       res.status(201).json({
-        orderId: result.orderId,
-        createdAt: result.createdAt,
-        name: result.name,
-        shippingAddress: result.shippingAddress
+        orderId: orderObj.orderId,
+        createdAt: orderObj.createdAt,
+        name: orderObj.name,
+        shippingAddress: orderObj.shippingAddress
       });
     })
     .catch(err => next(err));
