@@ -18,6 +18,7 @@ class CheckoutForm extends React.Component {
   }
 
   setCreditCard(event) {
+    if (typeof event.target.value !== 'number') return;
     this.setState({ creditCard: event.target.value });
   }
 
@@ -43,18 +44,23 @@ class CheckoutForm extends React.Component {
           <input type="text"
             id="name"
             placeholder="Name"
-            className="form-control" />
+            className="form-control"
+            onChange={this.setName} />
         </div>
         <div className="d-flex flex-column mb-3 form-group">
           <label htmlFor="credit">Credit Card</label>
           <input type="number"
             id="credit"
             placeholder="Credit Card Number"
-            className="form-control" />
+            className="form-control"
+            onChange={this.setCreditCard} />
         </div>
         <div className="d-flex flex-column mb-3 form-group">
           <label htmlFor="shipping">Shipping Address</label>
-          <textarea id="shipping" className="form-control" rows="5"></textarea>
+          <textarea id="shipping"
+            className="form-control"
+            rows="5"
+            onChange={this.setShippingAddress} />
         </div>
         <div className="d-flex justify-content-between">
           <p className="text-muted"
